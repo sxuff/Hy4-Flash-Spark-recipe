@@ -1,0 +1,112 @@
+{
+  "name": "r2-ub4096-auto",
+  "spec": {
+    "ubatch": 4096,
+    "batch": 4096,
+    "env": {
+      "GGML_CUDA_PDL": "1",
+      "GGML_CUDA_GRAPH_OPT": "1",
+      "GGML_CUDA_SPARK_MMQ_TILE": "-1",
+      "GGML_CUDA_SPARK_MMQ_TILE_FUSED": "-1"
+    },
+    "work": [
+      "panel",
+      "prefill"
+    ]
+  },
+  "status": "completed",
+  "load_s": 315.43041836397606,
+  "load_disk_read_gib": 87.80282974243164,
+  "smokes": {
+    "text": true,
+    "thinking": true,
+    "vision": true,
+    "tool": true
+  },
+  "panel": {
+    "median_tps": 35.78655872709129,
+    "rows": {
+      "code": {
+        "decode_tps": 37.51600813959884,
+        "draft_n": 152,
+        "accepted": 115,
+        "wall_s": 5.334856519999448
+      },
+      "math": {
+        "decode_tps": 34.057109314583734,
+        "draft_n": 171,
+        "accepted": 104,
+        "wall_s": 5.8423089729913045
+      },
+      "prose": {
+        "decode_tps": 31.444231926069506,
+        "draft_n": 179,
+        "accepted": 101,
+        "wall_s": 6.308810804999666
+      },
+      "structured": {
+        "decode_tps": 39.09360954571793,
+        "draft_n": 146,
+        "accepted": 118,
+        "wall_s": 5.152633229008643
+      }
+    },
+    "acceptance": 0.6759259259259259,
+    "tag": "",
+    "temp": 0.9,
+    "n_max": null
+  },
+  "prefill": {
+    "2048": {
+      "prompt_n": 2083,
+      "prompt_ms": 2804.645,
+      "prefill_tps": 742.6964909997522,
+      "client_ttft_s": 2.8125642739760224,
+      "disk_read_gib": 0.3094940185546875,
+      "disk_util": 0.0969819709802845
+    },
+    "2048-warm": {
+      "prompt_n": 2083,
+      "prompt_ms": 2465.794,
+      "prefill_tps": 844.7583212547358,
+      "client_ttft_s": 2.472396547003882,
+      "disk_read_gib": 0.004322052001953125,
+      "disk_util": 0.023521835157357025
+    },
+    "8192": {
+      "prompt_n": 8186,
+      "prompt_ms": 11771.097,
+      "prefill_tps": 695.4322099291171,
+      "client_ttft_s": 11.784253427002113,
+      "disk_read_gib": 0.848724365234375,
+      "disk_util": 0.06116677145723971
+    },
+    "8192-warm": {
+      "prompt_n": 8186,
+      "prompt_ms": 10852.185,
+      "prefill_tps": 754.3181396188879,
+      "client_ttft_s": 10.87570906302426,
+      "disk_read_gib": 0.00542449951171875,
+      "disk_util": 0.007279639998765226
+    },
+    "32768": {
+      "prompt_n": 33293,
+      "prompt_ms": 50524.311,
+      "prefill_tps": 658.950104237938,
+      "client_ttft_s": 50.60054505500011,
+      "disk_read_gib": 3.031036376953125,
+      "disk_util": 0.05110411104863953
+    },
+    "32768-warm": {
+      "prompt_n": 33293,
+      "prompt_ms": 47420.234,
+      "prefill_tps": 702.0842621738223,
+      "client_ttft_s": 47.46992258098908,
+      "disk_read_gib": 0.018077850341796875,
+      "disk_util": 0.006410765497276965
+    }
+  },
+  "min_avail_gib": 18.74920654296875,
+  "peak_swap_growth": 0,
+  "guard": null
+}

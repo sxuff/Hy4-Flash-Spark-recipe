@@ -1,0 +1,38 @@
+{
+  "name": "r3-prof",
+  "spec": {
+    "ubatch": 2048,
+    "batch": 4096,
+    "load_mode": "dio",
+    "nsys": true,
+    "env": {
+      "GGML_CUDA_PDL": "1",
+      "GGML_CUDA_GRAPH_OPT": "1"
+    },
+    "work": [
+      "profile"
+    ]
+  },
+  "status": "completed",
+  "load_s": 24.053337741992436,
+  "load_disk_read_gib": 86.02542495727539,
+  "smokes": {
+    "text": true,
+    "thinking": true,
+    "vision": true,
+    "tool": true
+  },
+  "profiled_prefill": {
+    "8192": {
+      "prompt_n": 8209,
+      "prompt_ms": 10450.045,
+      "prefill_tps": 785.5468564967902,
+      "client_ttft_s": 10.463446267996915,
+      "disk_read_gib": 0.00197601318359375,
+      "disk_util": 0.005263135230518146
+    }
+  },
+  "min_avail_gib": 20.565841674804688,
+  "peak_swap_growth": 0,
+  "guard": null
+}

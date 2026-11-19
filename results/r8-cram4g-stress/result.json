@@ -1,0 +1,113 @@
+{
+  "name": "r8-cram4g-stress",
+  "spec": {
+    "ctx": 262144,
+    "depth": 4,
+    "ubatch": 2048,
+    "batch": 4096,
+    "load_mode": "dio",
+    "cache_ram": 4096,
+    "env": {
+      "GGML_CUDA_PDL": "1",
+      "GGML_CUDA_GRAPH_OPT": "1",
+      "GGML_CUDA_FA_576_WHOLE_TILES": "1"
+    },
+    "work": [
+      "fill",
+      "needle120000"
+    ]
+  },
+  "status": "completed",
+  "load_s": 23.04787628998747,
+  "load_disk_read_gib": 85.96569061279297,
+  "smokes": {
+    "text": true,
+    "thinking": true,
+    "vision": true,
+    "tool": true
+  },
+  "fill": {
+    "fill": [
+      {
+        "prompt_n": 15986,
+        "cache_n": 0,
+        "ttft_s": 21.61,
+        "avail_gib": 12.91
+      },
+      {
+        "prompt_n": 15824,
+        "cache_n": 0,
+        "ttft_s": 22.02,
+        "avail_gib": 12.61
+      },
+      {
+        "prompt_n": 16054,
+        "cache_n": 0,
+        "ttft_s": 21.52,
+        "avail_gib": 12.27
+      },
+      {
+        "prompt_n": 15995,
+        "cache_n": 0,
+        "ttft_s": 20.81,
+        "avail_gib": 11.97
+      },
+      {
+        "prompt_n": 15895,
+        "cache_n": 0,
+        "ttft_s": 22.78,
+        "avail_gib": 11.65
+      },
+      {
+        "prompt_n": 16045,
+        "cache_n": 0,
+        "ttft_s": 22.33,
+        "avail_gib": 11.21
+      },
+      {
+        "prompt_n": 15864,
+        "cache_n": 0,
+        "ttft_s": 23.07,
+        "avail_gib": 10.79
+      },
+      {
+        "prompt_n": 15934,
+        "cache_n": 0,
+        "ttft_s": 22.47,
+        "avail_gib": 10.36
+      }
+    ],
+    "revisit_last2_then_first": [
+      {
+        "prompt_n": 17,
+        "cache_n": 15957,
+        "ttft_s": 0.26,
+        "avail_gib": 10.36
+      },
+      {
+        "prompt_n": 17,
+        "cache_n": 15887,
+        "ttft_s": 0.54,
+        "avail_gib": 10.3
+      },
+      {
+        "prompt_n": 17,
+        "cache_n": 16009,
+        "ttft_s": 0.44,
+        "avail_gib": 9.87
+      }
+    ]
+  },
+  "needle": {
+    "needle120000": {
+      "prompt_n": 120547,
+      "prefill_tps": 635.181182235171,
+      "client_ttft_s": 190.0804201470164,
+      "passed": true,
+      "answer": "RIVER-4862"
+    }
+  },
+  "min_avail_gib": 9.706966400146484,
+  "peak_swap_growth": 0,
+  "guard": null
+}

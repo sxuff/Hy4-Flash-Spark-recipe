@@ -1,0 +1,19 @@
+# build + downloaded inputs
+llama.cpp/
+build-cuda/
+hy4-flash-spark.patch
+*.part
+llama-help.txt
+devices.txt
+bin.sha256
+# runtime state written by build.sh / download.py / bench
+*-status.json
+*.lock
+*.tmp
+restore-required.json
+restoration.json
+RESULTS.json
+RECIPE.md
+runs/
+__pycache__/
+.claude/

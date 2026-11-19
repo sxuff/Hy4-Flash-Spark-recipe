@@ -1,0 +1,90 @@
+{
+  "name": "r1-base",
+  "spec": {
+    "ubatch": 1024,
+    "work": [
+      "panel",
+      "prefill",
+      "cache"
+    ]
+  },
+  "status": "completed",
+  "load_s": 320.562609332992,
+  "load_disk_read_gib": 87.77803421020508,
+  "smokes": {
+    "text": true,
+    "thinking": true,
+    "vision": true,
+    "tool": true
+  },
+  "panel": {
+    "median_tps": 36.86935586900468,
+    "rows": {
+      "code": {
+        "decode_tps": 38.798411174592445,
+        "draft_n": 152,
+        "accepted": 115,
+        "wall_s": 5.162485193985049
+      },
+      "math": {
+        "decode_tps": 34.94030056341692,
+        "draft_n": 171,
+        "accepted": 104,
+        "wall_s": 5.693799136002781
+      },
+      "prose": {
+        "decode_tps": 32.712582115431914,
+        "draft_n": 179,
+        "accepted": 101,
+        "wall_s": 6.072036983008729
+      },
+      "structured": {
+        "decode_tps": 40.44473967457442,
+        "draft_n": 146,
+        "accepted": 118,
+        "wall_s": 4.964005148009164
+      }
+    },
+    "acceptance": 0.6759259259259259,
+    "tag": "",
+    "temp": 0.9,
+    "n_max": null
+  },
+  "prefill": {
+    "2048": {
+      "prompt_n": 2083,
+      "prompt_ms": 3137.71,
+      "prefill_tps": 663.8599488161748,
+      "client_ttft_s": 3.1461929329962004,
+      "disk_read_gib": 0.301971435546875
+    },
+    "8192": {
+      "prompt_n": 8186,
+      "prompt_ms": 11798.372,
+      "prefill_tps": 693.8245378260661,
+      "client_ttft_s": 11.819964024994988,
+      "disk_read_gib": 0.8436698913574219
+    },
+    "32768": {
+      "prompt_n": 33293,
+      "prompt_ms": 52201.138,
+      "prefill_tps": 637.7830307071083,
+      "client_ttft_s": 52.276336087990785,
+      "disk_read_gib": 3.2282447814941406
+    }
+  },
+  "cache": {
+    "turn1": {
+      "prompt_n": 16019,
+      "ttft_s": 24.392311675997917
+    },
+    "turn2": {
+      "prompt_n": 21,
+      "cache_n": 16082,
+      "ttft_s": 0.29131363998749293
+    }
+  },
+  "min_avail_gib": 22.547256469726562,
+  "peak_swap_growth": 0,
+  "guard": null
+}

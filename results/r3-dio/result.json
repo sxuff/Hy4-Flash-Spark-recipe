@@ -1,0 +1,87 @@
+{
+  "name": "r3-dio",
+  "spec": {
+    "ubatch": 2048,
+    "batch": 4096,
+    "load_mode": "dio",
+    "env": {
+      "GGML_CUDA_PDL": "1",
+      "GGML_CUDA_GRAPH_OPT": "1"
+    },
+    "work": [
+      "panel",
+      "prefill",
+      "cache"
+    ],
+    "prefill_sizes": [
+      8192
+    ],
+    "warm": false
+  },
+  "status": "completed",
+  "load_s": 23.05397945700679,
+  "load_disk_read_gib": 87.02515411376953,
+  "smokes": {
+    "text": true,
+    "thinking": true,
+    "vision": true,
+    "tool": true
+  },
+  "panel": {
+    "median_tps": 35.33049984708667,
+    "rows": {
+      "code": {
+        "decode_tps": 37.081740776111126,
+        "draft_n": 152,
+        "accepted": 115,
+        "wall_s": 5.39121252798941
+      },
+      "math": {
+        "decode_tps": 33.579258918062216,
+        "draft_n": 171,
+        "accepted": 104,
+        "wall_s": 5.914122749993112
+      },
+      "prose": {
+        "decode_tps": 31.36853013801332,
+        "draft_n": 179,
+        "accepted": 101,
+        "wall_s": 6.318363732978469
+      },
+      "structured": {
+        "decode_tps": 39.24795170899144,
+        "draft_n": 146,
+        "accepted": 118,
+        "wall_s": 5.109041143994546
+      }
+    },
+    "acceptance": 0.6759259259259259,
+    "tag": "",
+    "temp": 0.9,
+    "n_max": null
+  },
+  "prefill": {
+    "8192": {
+      "prompt_n": 8209,
+      "prompt_ms": 10869.809,
+      "prefill_tps": 755.2110621262987,
+      "client_ttft_s": 10.88261018099729,
+      "disk_read_gib": 0.4279022216796875,
+      "disk_util": 0.03459122418802391
+    }
+  },
+  "cache": {
+    "turn1": {
+      "prompt_n": 16019,
+      "ttft_s": 21.885715961980168
+    },
+    "turn2": {
+      "prompt_n": 21,
+      "cache_n": 16082,
+      "ttft_s": 0.2801142179814633
+    }
+  },
+  "min_avail_gib": 21.276561737060547,
+  "peak_swap_growth": 0,
+  "guard": null
+}

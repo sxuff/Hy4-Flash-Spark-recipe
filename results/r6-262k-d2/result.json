@@ -1,0 +1,74 @@
+{
+  "name": "r6-262k-d2",
+  "spec": {
+    "ctx": 262144,
+    "depth": 2,
+    "ubatch": 2048,
+    "batch": 4096,
+    "load_mode": "dio",
+    "env": {
+      "GGML_CUDA_PDL": "1",
+      "GGML_CUDA_GRAPH_OPT": "1"
+    },
+    "work": [
+      "temps"
+    ],
+    "reps": 2
+  },
+  "status": "completed",
+  "load_s": 24.057694826013176,
+  "load_disk_read_gib": 86.91766738891602,
+  "smokes": {
+    "text": true,
+    "thinking": true,
+    "vision": true,
+    "tool": true
+  },
+  "temps": [
+    {
+      "median_tps": 38.17086561150683,
+      "acceptance": 0.7959183673469388,
+      "tag": "t0.0-r0",
+      "temp": 0.0,
+      "n_max": null
+    },
+    {
+      "median_tps": 38.80317163990115,
+      "acceptance": 0.7959183673469388,
+      "tag": "t0.0-r1",
+      "temp": 0.0,
+      "n_max": null
+    },
+    {
+      "median_tps": 34.65266708751828,
+      "acceptance": 0.6759259259259259,
+      "tag": "t0.7-r0",
+      "temp": 0.7,
+      "n_max": null
+    },
+    {
+      "median_tps": 34.79060556302473,
+      "acceptance": 0.6759259259259259,
+      "tag": "t0.7-r1",
+      "temp": 0.7,
+      "n_max": null
+    },
+    {
+      "median_tps": 35.356819169487906,
+      "acceptance": 0.6759259259259259,
+      "tag": "t0.9-r0",
+      "temp": 0.9,
+      "n_max": null
+    },
+    {
+      "median_tps": 35.56895152806713,
+      "acceptance": 0.6759259259259259,
+      "tag": "t0.9-r1",
+      "temp": 0.9,
+      "n_max": null
+    }
+  ],
+  "min_avail_gib": 13.698917388916016,
+  "peak_swap_growth": 0,
+  "guard": null
+}

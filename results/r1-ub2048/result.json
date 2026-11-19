@@ -1,0 +1,79 @@
+{
+  "name": "r1-ub2048",
+  "spec": {
+    "ubatch": 2048,
+    "batch": 4096,
+    "work": [
+      "panel",
+      "prefill"
+    ]
+  },
+  "status": "completed",
+  "load_s": 319.77493149600923,
+  "load_disk_read_gib": 87.83724212646484,
+  "smokes": {
+    "text": true,
+    "thinking": true,
+    "vision": true,
+    "tool": true
+  },
+  "panel": {
+    "median_tps": 35.856813633302274,
+    "rows": {
+      "code": {
+        "decode_tps": 37.7826528169836,
+        "draft_n": 152,
+        "accepted": 115,
+        "wall_s": 5.296251185995061
+      },
+      "math": {
+        "decode_tps": 33.93097444962095,
+        "draft_n": 171,
+        "accepted": 104,
+        "wall_s": 5.857601577008609
+      },
+      "prose": {
+        "decode_tps": 31.65786434389656,
+        "draft_n": 179,
+        "accepted": 101,
+        "wall_s": 6.2646878650120925
+      },
+      "structured": {
+        "decode_tps": 39.201279070006095,
+        "draft_n": 146,
+        "accepted": 118,
+        "wall_s": 5.1137380709988065
+      }
+    },
+    "acceptance": 0.6759259259259259,
+    "tag": "",
+    "temp": 0.9,
+    "n_max": null
+  },
+  "prefill": {
+    "2048": {
+      "prompt_n": 2083,
+      "prompt_ms": 2907.77,
+      "prefill_tps": 716.3565206326498,
+      "client_ttft_s": 2.912054882996017,
+      "disk_read_gib": 0.3072662353515625
+    },
+    "8192": {
+      "prompt_n": 8186,
+      "prompt_ms": 11065.569,
+      "prefill_tps": 739.7721707758544,
+      "client_ttft_s": 11.088771913025994,
+      "disk_read_gib": 0.840972900390625
+    },
+    "32768": {
+      "prompt_n": 33293,
+      "prompt_ms": 48596.07,
+      "prefill_tps": 685.0965520462869,
+      "client_ttft_s": 48.64395037500071,
+      "disk_read_gib": 3.015605926513672
+    }
+  },
+  "min_avail_gib": 21.241596221923828,
+  "peak_swap_growth": 0,
+  "guard": null
+}

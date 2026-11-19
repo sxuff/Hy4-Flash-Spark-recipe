@@ -1,0 +1,196 @@
+{
+  "name": "r4-262k-depth",
+  "spec": {
+    "ctx": 262144,
+    "depth": 4,
+    "ubatch": 2048,
+    "batch": 4096,
+    "load_mode": "dio",
+    "env": {
+      "GGML_CUDA_PDL": "1",
+      "GGML_CUDA_GRAPH_OPT": "1"
+    },
+    "work": [
+      "panel",
+      "depth",
+      "needle60000",
+      "needle120000",
+      "needle200000"
+    ]
+  },
+  "status": "completed",
+  "load_s": 24.05355748301372,
+  "load_disk_read_gib": 86.90041732788086,
+  "smokes": {
+    "text": true,
+    "thinking": true,
+    "vision": true,
+    "tool": true
+  },
+  "panel": {
+    "median_tps": 35.9259090860357,
+    "rows": {
+      "code": {
+        "decode_tps": 32.44418708031703,
+        "draft_n": 255,
+        "accepted": 127,
+        "wall_s": 6.133464518003166
+      },
+      "math": {
+        "decode_tps": 26.404662372153396,
+        "draft_n": 326,
+        "accepted": 109,
+        "wall_s": 7.465456190984696
+      },
+      "prose": {
+        "decode_tps": 39.407631091754375,
+        "draft_n": 209,
+        "accepted": 138,
+        "wall_s": 5.081061000004411
+      },
+      "structured": {
+        "decode_tps": 40.56113678213424,
+        "draft_n": 209,
+        "accepted": 138,
+        "wall_s": 4.9527078489772975
+      }
+    },
+    "acceptance": 0.5125125125125125,
+    "tag": "",
+    "temp": 0.9,
+    "n_max": null
+  },
+  "depth": [
+    {
+      "median_tps": 40.25554583731663,
+      "acceptance": 0.6006711409395973,
+      "tag": "t0.0-n0",
+      "temp": 0.0,
+      "n_max": 0
+    },
+    {
+      "median_tps": 40.557275446284635,
+      "acceptance": 0.608352144469526,
+      "tag": "t0.0-n1",
+      "temp": 0.0,
+      "n_max": 1
+    },
+    {
+      "median_tps": 40.547485466592846,
+      "acceptance": 0.608352144469526,
+      "tag": "t0.0-n2",
+      "temp": 0.0,
+      "n_max": 2
+    },
+    {
+      "median_tps": 40.72516867561835,
+      "acceptance": 0.608352144469526,
+      "tag": "t0.0-n3",
+      "temp": 0.0,
+      "n_max": 3
+    },
+    {
+      "median_tps": 40.77506885845153,
+      "acceptance": 0.608352144469526,
+      "tag": "t0.0-n4",
+      "temp": 0.0,
+      "n_max": 4
+    },
+    {
+      "median_tps": 39.325151660769095,
+      "acceptance": 0.5868131868131868,
+      "tag": "t0.7-n0",
+      "temp": 0.7,
+      "n_max": 0
+    },
+    {
+      "median_tps": 39.29053921960334,
+      "acceptance": 0.5905077262693157,
+      "tag": "t0.7-n1",
+      "temp": 0.7,
+      "n_max": 1
+    },
+    {
+      "median_tps": 39.29007507491393,
+      "acceptance": 0.5905077262693157,
+      "tag": "t0.7-n2",
+      "temp": 0.7,
+      "n_max": 2
+    },
+    {
+      "median_tps": 39.24647774265074,
+      "acceptance": 0.5905077262693157,
+      "tag": "t0.7-n3",
+      "temp": 0.7,
+      "n_max": 3
+    },
+    {
+      "median_tps": 39.27691472541318,
+      "acceptance": 0.5905077262693157,
+      "tag": "t0.7-n4",
+      "temp": 0.7,
+      "n_max": 4
+    },
+    {
+      "median_tps": 35.6982847154729,
+      "acceptance": 0.5125125125125125,
+      "tag": "t0.9-n0",
+      "temp": 0.9,
+      "n_max": 0
+    },
+    {
+      "median_tps": 35.496794769194516,
+      "acceptance": 0.5125125125125125,
+      "tag": "t0.9-n1",
+      "temp": 0.9,
+      "n_max": 1
+    },
+    {
+      "median_tps": 35.41335368778966,
+      "acceptance": 0.5125125125125125,
+      "tag": "t0.9-n2",
+      "temp": 0.9,
+      "n_max": 2
+    },
+    {
+      "median_tps": 35.52737868956191,
+      "acceptance": 0.5125125125125125,
+      "tag": "t0.9-n3",
+      "temp": 0.9,
+      "n_max": 3
+    },
+    {
+      "median_tps": 35.394977957156215,
+      "acceptance": 0.5125125125125125,
+      "tag": "t0.9-n4",
+      "temp": 0.9,
+      "n_max": 4
+    }
+  ],
+  "needle": {
+    "needle60000": {
+      "prompt_n": 60247,
+      "prefill_tps": 677.8651591665018,
+      "client_ttft_s": 88.9488011939975,
+      "passed": true,
+      "answer": "RIVER-4862"
+    },
+    "needle120000": {
+      "prompt_n": 120547,
+      "prefill_tps": 622.5163278399742,
+      "client_ttft_s": 193.78007865900872,
+      "passed": true,
+      "answer": "RIVER-4862"
+    },
+    "needle200000": {
+      "prompt_n": 199936,
+      "prefill_tps": 542.4195259743414,
+      "client_ttft_s": 368.8164861309924,
+      "passed": true,
+      "answer": "RIVER-4862"
+    }
+  },
+  "min_avail_gib": 12.854423522949219,
+  "peak_swap_growth": 0,
+  "guard": null
+}
