@@ -25,6 +25,13 @@ checks passed in every configuration; no configuration grew host swap. Full meth
 configuration tried, and the prefill profile: [`TESTING-AND-RESULTS.md`](TESTING-AND-RESULTS.md).
 Raw receipts: [`results/`](results/).
 
+**v2.1 (2026-11-24): `serve.py` now stops MTP drafting below 75% draft confidence (`--spec-draft-p-min 0.75`).**
+On the [inference-optimisation skill](https://github.com/sybil-solutions/inference-optimisation-skill)'s
+benchmark that is **+7.0% decode at temperature 0 and +6.8% at 0.7** (time-weighted over six prompts; every v2.1 run
+beat every v2 control), with prefill, load time and memory unchanged and retrieval passed at 69K, 131K and 245K tokens.
+The table and card above are still the v2 measurements from `bench/tune.py`; they have not been re-measured with the
+cutoff. `python3 serve.py --p-min 0` serves v2 exactly. [Receipts and every run](results/skill-hillclimb-20261124/README.md)
+
 ## Quick start
 
 Prerequisites: a DGX Spark / GB10 with CUDA 13.0, `cmake`, `ninja`, Python 3, and ~180 GB free on
@@ -33,7 +40,7 @@ the NVMe (150 GiB of model files; the downloader keeps a 20 GiB reserve). Nothin
 ```bash
 HY4_BUILD_JOBS=8 bash build.sh     # llama.cpp 2cbca38 + AngelSlim Spark patch (SHA-256 pinned), SM121a
 python3 download.py                # model + vision projector -> ~/models/, resumable, SHA-256 verified
-python3 serve.py --cache-ram 4096  # 256K ctx, MTP depth 4, DirectIO load; listens on 127.0.0.1:8087
+python3 serve.py --cache-ram 4096  # 256K ctx, MTP depth 4 with a 0.75 draft cutoff, DirectIO load; 127.0.0.1:8087
 ```
 
 `python3 serve.py --dry-run` prints the full environment and command line without starting anything.
@@ -56,6 +63,7 @@ so follow-up turns reuse the cached prompt.
 | Agent or chat use with several interleaved conversations | `--cache-ram 4096` (recommended) |
 | Largest memory margin for other apps | `--ctx 65536` (≈21 GiB stays free) |
 | A filesystem without O_DIRECT | `--load-mode mmap` (same results, ~5 min load instead of ~23 s) |
+| The v2 drafting (every round drafts all `--depth` tokens) | `--p-min 0`; 0.5 measured +5–6% and 0.9 no gain against v2 |
 
 Do not raise `--cache-ram` to 8192 at 256K context: a full cache plus a long prompt can push free
 memory under 6 GiB. MTP depth can only be set at launch (per-request speculative parameters are
@@ -69,7 +77,8 @@ compiled out in this llama.cpp build).
   configuration, memory guard, prefill/decode/cache/retrieval workloads); `bench/qualify.py` — the
   v1 qualification harness and the shared helpers `tune.py` uses
 - `results/<config>/` — `result.json` and `argv.json` for each configuration tested;
-  `results/r3-prof/kern_sum.csv` is the Nsight Systems kernel summary for an 8K prefill
+  `results/r3-prof/kern_sum.csv` is the Nsight Systems kernel summary for an 8K prefill;
+  `results/skill-hillclimb-20261124/` is the v2.1 hill-climb (ledger, plan, ceilings, tools)
 - `tools/make_card.py` — regenerates `assets/result-card-*.svg` from `results/`
 - [`AGENTS.md`](AGENTS.md) — short brief for AI agents working in this repository
 
@@ -78,6 +87,9 @@ compiled out in this llama.cpp build).
 - Model and the Spark patch: [AngelSlim/Hy4-flash-GGUF](https://huggingface.co/AngelSlim/Hy4-flash-GGUF)
   (revision `ecd803c859a36bdf9f3614dbd7c548165df74c30`). The model keeps its own license; see its model card.
 - Engine: [llama.cpp](https://github.com/ggml-org/llama.cpp) at `2cbca389f515df455412dafa07e2b1359cc72a6d`.
+- The v2.1 draft cutoff was found with [0xSero](https://github.com/0xSero)'s
+  [inference-optimisation skill](https://github.com/sybil-solutions/inference-optimisation-skill) (commit `fda968e`):
+  its method and its `bench.py` ran unchanged on the GB10.
 
 ## License
 

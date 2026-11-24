@@ -102,3 +102,29 @@ Further prefill gains need kernel work (fused MoE, attention), not flags.
 - ubatch 4096 (`r2-ub4096-auto`): slower prefill, +2.5 GiB.
 - Per-request `speculative.*` parameters: compiled out in this llama.cpp build (`#if 0` in
   `tools/server/server-schema.cpp`), so MTP depth is a launch-time setting.
+
+## v2.1: MTP draft confidence cutoff (2026-11-24)
+
+Found with [0xSero](https://github.com/0xSero)'s
+[inference-optimisation skill](https://github.com/sybil-solutions/inference-optimisation-skill) on the same GX10, with
+the skill's own benchmark (`bench.py`: six fixed prompts, 512 tokens, single stream) instead of `bench/tune.py`, so
+its numbers are not comparable with the tables above. Each run started a fresh server; a v2 control ran on both sides
+of every candidate. [Every run, the ledger and the tools](results/skill-hillclimb-20261124/README.md).
+
+`--spec-draft-p-min` defaults to 0.00 in this build, so every MTP round drafted all `--depth` tokens. At 0.75 the
+draft stops at the first token the MTP head is less than 75% sure of.
+
+| Time-weighted decode | v2 | v2.1 (`--spec-draft-p-min 0.75`) | gain |
+|---|---:|---:|---:|
+| temperature 0 | 32.31 tok/s (8 runs, 31.86–32.63) | 34.58 tok/s (5 runs, 34.43–34.78) | +7.0% |
+| temperature 0.7 | 31.81 tok/s (6 runs, 30.98–32.78) | 33.98 tok/s (3 runs, 33.51–34.32) | +6.8% |
+
+- Cutoffs: 0.5 gave +5–6%, 0.9 nothing (too few drafts; the code prompt slowed). Depth 5 without a cutoff −10%;
+  depth 6 with 0.75 −3% against depth 4 with 0.75. MTP off: 26.16 tok/s.
+- Prefill, load time (23–26 s) and memory are unchanged. Retrieval with the cutoff passed at 68,768, 130,608 and
+  244,793 tokens (3/3 codes each).
+- Greedy outputs differ from v2 at near-tie tokens (1 of 6 prompts byte-identical). v2's own MTP differs from MTP-off
+  greedy on 5 of 6 prompts as well, so drafting in this build is not bit-exact against no drafting; the cutoff adds no
+  new kind of difference.
+- CUDA graphs stay on under MTP verify (1,048 graph reuses, no changed-size reallocations).
+- Not yet done: a `bench/tune.py` arm with `"extra": ["--spec-draft-p-min", "0.75"]`, then `tools/make_card.py`.
