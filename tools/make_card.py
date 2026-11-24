@@ -4,7 +4,10 @@
     python3 tools/make_card.py        # writes assets/result-card-{light,dark}.svg
 
 Every number on the card is read from results/<arm>/result.json; nothing is typed in by hand.
-Colours: v1 -> v2 is an ordered pair, so it is one blue hue as an ordinal ramp (validated light and dark).
+Colours: each chart is an ordered pair (v1 -> v2.1, v2 -> v2.1), so it is one blue hue as an ordinal ramp
+(validated light and dark).
+v2.1 (2026-11-24) = v2 + --spec-draft-p-min 0.75. Its decode is compared with v2 measured the same day (v2 controls
+on both sides), because the same v2 settings measured 40.6 tok/s at temp 0 on 2026-11-19 and 39.7 on 2026-11-24.
 """
 import json, pathlib, statistics
 from xml.sax.saxutils import escape
@@ -22,19 +25,24 @@ def temp_means(arm):
     return {t: statistics.mean(v) for t, v in by.items()}
 
 # ---------------------------------------------------------------- numbers (all from receipts)
-v1, v2 = load('r1-base'), load('r7-final-cram0')
+v1, v2 = load('r1-base'), load('r9-final-pmin75')          # v2 = the v2.1 final arm (load, prefill, swap)
 SIZES = [('2048', '2K'), ('8192', '8K'), ('32768', '32K')]
 prefill = [(lab, v1['prefill'][k]['prefill_tps'], v2['prefill'][k]['prefill_tps']) for k, lab in SIZES]
-d2, d4 = temp_means('r6-262k-d2'), temp_means('r6-262k-d4')
 TEMPS = [(0.0, 'temp 0'), (0.7, 'temp 0.7'), (0.9, 'temp 0.9')]
-decode = [(lab, d2[t], d4[t]) for t, lab in TEMPS]
+# decode: v2 controls on both sides of the v2.1 arm, same day
+ca, cb = temp_means('r9-d4-v2'), temp_means('r9-d4-v2b')
+dv2 = {t: statistics.mean((ca[t], cb[t])) for t in ca}
+d4 = temp_means('r9-d4-pmin75')
+decode = [(lab, dv2[t], d4[t]) for t, lab in TEMPS]
+# retrieval and the prompt cache were measured on v2; the cutoff changes drafting only (v2.1 passed the 60K needle too)
 needles = load('r4-262k-depth')['needle']
 longest = max((v['prompt_n'] for v in needles.values() if v['passed']))
-swap_off = load('r7-final-cram0')['swap']['A2']['ttft_s']
+swap_off = load('r9-final-pmin75')['swap']['A2']['ttft_s']
 swap_on = load('r7-final-cram8g')['swap']['A2']['ttft_s']
 stress = load('r8-cram4g-stress')
 floor_gib = stress['min_avail_gib']
-swap_growth = max(load(a)['peak_swap_growth'] for a in ('r4-262k-depth', 'r7-final-cram0', 'r7-final-cram8g', 'r8-cram4g-stress'))
+swap_growth = max(load(a)['peak_swap_growth'] for a in ('r4-262k-depth', 'r7-final-cram0', 'r7-final-cram8g', 'r8-cram4g-stress',
+                                                        'r9-d4-v2', 'r9-d4-pmin75', 'r9-d4-v2b', 'r9-final-pmin75'))
 pf8_v1, pf8_v2 = prefill[1][1], prefill[1][2]
 
 # ---------------------------------------------------------------- themes
@@ -93,23 +101,24 @@ def card(theme):
     c = THEMES[theme]
     s = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" font-family="{FONT}" role="img" '
          f'aria-labelledby="t d">',
-         f'<title id="t">Hy4 Flash on one DGX Spark: recipe v2 results</title>',
-         f'<desc id="d">Decode {d4[0.0]:.1f} tok/s at temp 0. Prefill at 8K {pf8_v2:.0f} tok/s vs {pf8_v1:.0f} in v1. '
+         f'<title id="t">Hy4 Flash on one DGX Spark: recipe v2.1 results</title>',
+         f'<desc id="d">Decode {d4[0.0]:.1f} tok/s at temp 0, {d4[0.7]:.1f} at 0.7 and {d4[0.9]:.1f} at 0.9, against '
+         f'{dv2[0.0]:.1f}, {dv2[0.7]:.1f} and {dv2[0.9]:.1f} for v2 the same day. Prefill at 8K {pf8_v2:.0f} tok/s vs {pf8_v1:.0f} in v1. '
          f'Model load {v2["load_s"]:.0f} s vs {v1["load_s"]:.0f} s. Retrieval passed at {round(longest / 1000)}K tokens. '
          f'Returning to a conversation {swap_on:.1f} s vs {swap_off:.0f} s.</desc>',
          f'<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="20" fill="{c["surface"]}" stroke="{c["border"]}"/>']
     # header
     s.append(txt(PAD, 78, 'Hy4 Flash on one DGX Spark', 34, c['ink'], 650))
     s.append(txt(PAD, 110, 'AngelSlim SPARK-4Bit-Fast GGUF · llama.cpp + Spark patch · GB10, 128 GB unified memory', 16.5, c['ink2']))
-    s.append(txt(W - PAD, 78, 'recipe v2', 15, c['ink2'], 600, anchor='end'))
-    s.append(txt(W - PAD, 104, 'single stream · measured 2026-11-19', 14, c['muted'], anchor='end'))
+    s.append(txt(W - PAD, 78, 'recipe v2.1', 15, c['ink2'], 600, anchor='end'))
+    s.append(txt(W - PAD, 104, 'single stream · measured 2026-11-24', 14, c['muted'], anchor='end'))
     # hero + tiles
     ty, th = 144, 134
     s.append(f'<rect x="{PAD}" y="{ty}" width="330" height="{th}" rx="12" fill="{c["tile"]}" stroke="{c["border"]}"/>')
     s.append(txt(PAD + 20, ty + 32, 'Decode, temp 0', 15, c['ink2']))
     s.append(f'<text x="{PAD + 20}" y="{ty + 92}" fill="{c["ink"]}" font-weight="650"><tspan font-size="60">{d4[0.0]:.1f}</tspan>'
              f'<tspan font-size="22" dx="8" fill="{c["ink2"]}" font-weight="500">tok/s</tspan></text>')
-    s.append(txt(PAD + 20, ty + 120, f'{d4[0.7]:.1f} at temp 0.7 · MTP depth 4 · 256K context', 14, c['ink2']))
+    s.append(txt(PAD + 20, ty + 120, f'{d4[0.7]:.1f} at temp 0.7 · MTP depth 4, cutoff 0.75', 14, c['ink2']))
     tx, tw, gap = PAD + 330 + 16, 0, 14
     tw = (W - PAD - tx - 3 * gap) / 4
     tiles = [('Prefill, 8K prompt', f'{pf8_v2:.0f}', 'tok/s', f'▲ {100 * (pf8_v2 / pf8_v1 - 1):.0f}% vs v1', c['good']),
@@ -120,11 +129,11 @@ def card(theme):
         s += tile(tx + i * (tw + gap), ty, tw, th, c, *t)
     # charts
     cy, cw = 330, (W - 2 * PAD - 56) / 2
-    s += chart(PAD, cy, cw, c, 'Prefill, cold prompt', 'tok/s', prefill, ('v1 recipe', 'v2 recipe'), 900, 300)
-    s += chart(PAD + cw + 56, cy, cw, c, 'Decode at 256K context', 'tok/s', decode, ('MTP depth 2 (v1)', 'MTP depth 4 (v2)'), 45, 15)
+    s += chart(PAD, cy, cw, c, 'Prefill, cold prompt', 'tok/s', prefill, ('v1 recipe', 'v2.1 recipe'), 900, 300)
+    s += chart(PAD + cw + 56, cy, cw, c, 'Decode at 256K context', 'tok/s', decode, ('v2, same day', 'v2.1: draft cutoff 0.75'), 45, 15)
     # footer
     s.append(f'<line x1="{PAD}" x2="{W - PAD}" y1="{H - 56}" y2="{H - 56}" stroke="{c["grid"]}"/>')
-    s.append(txt(PAD, H - 26, f'Non-repetitive prompts, cache off for prefill · lowest free memory {floor_gib:.1f} GiB (8 cached conversations + 120K prompt), '
+    s.append(txt(PAD, H - 26, f'Decode: v2 controls on both sides of v2.1 · lowest free memory {floor_gib:.1f} GiB (8 cached conversations + 120K prompt), '
                  f'{"no" if swap_growth == 0 else swap_growth} swap growth · receipts in results/', 14, c['muted']))
     s.append('</svg>')
     return '\n'.join(s) + '\n'

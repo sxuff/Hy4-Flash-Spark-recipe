@@ -102,3 +102,54 @@ Further prefill gains need kernel work (fused MoE, attention), not flags.
 - ubatch 4096 (`r2-ub4096-auto`): slower prefill, +2.5 GiB.
 - Per-request `speculative.*` parameters: compiled out in this llama.cpp build (`#if 0` in
   `tools/server/server-schema.cpp`), so MTP depth is a launch-time setting.
+
+## v2.1: MTP draft confidence cutoff (2026-11-24)
+
+Found with [0xSero](https://github.com/0xSero)'s
+[inference-optimisation skill](https://github.com/sybil-solutions/inference-optimisation-skill) on the same GX10, with
+the skill's own benchmark (`bench.py`: six fixed prompts, 512 tokens, single stream) instead of `bench/tune.py`, so
+its numbers are not comparable with the tables above. Each run started a fresh server; a v2 control ran on both sides
+of every candidate. [Every run, the ledger and the tools](results/skill-hillclimb-20261124/README.md).
+
+`--spec-draft-p-min` defaults to 0.00 in this build, so every MTP round drafted all `--depth` tokens. At 0.75 the
+draft stops at the first token the MTP head is less than 75% sure of.
+
+| Time-weighted decode | v2 | v2.1 (`--spec-draft-p-min 0.75`) | gain |
+|---|---:|---:|---:|
+| temperature 0 | 32.31 tok/s (8 runs, 31.86–32.63) | 34.58 tok/s (5 runs, 34.43–34.78) | +7.0% |
+| temperature 0.7 | 31.81 tok/s (6 runs, 30.98–32.78) | 33.98 tok/s (3 runs, 33.51–34.32) | +6.8% |
+
+- Cutoffs: 0.5 gave +5–6%, 0.9 nothing (too few drafts; the code prompt slowed). Depth 5 without a cutoff −10%;
+  depth 6 with 0.75 −3% against depth 4 with 0.75. MTP off: 26.16 tok/s.
+- Prefill, load time (23–26 s) and memory are unchanged. Retrieval with the cutoff passed at 68,768, 130,608 and
+  244,793 tokens (3/3 codes each).
+- Greedy outputs differ from v2 at near-tie tokens (1 of 6 prompts byte-identical). v2's own MTP differs from MTP-off
+  greedy on 5 of 6 prompts as well, so drafting in this build is not bit-exact against no drafting; the cutoff adds no
+  new kind of difference.
+- CUDA graphs stay on under MTP verify (1,048 graph reuses, no changed-size reallocations).
+
+### The same change on `bench/tune.py` (`r9-*`, 2026-11-24)
+
+Run with this repository's harness, the arm specs of `r6-262k-d4` and `r7-final-cram0` plus
+`"extra": ["--spec-draft-p-min", "0.75"]`, in one session, with v2 controls on both sides of the decode arm (the
+GX10's other model was stopped and restored by a wrapper instead of `tune.py begin`/`end`, which name GLM). The card
+is regenerated from these arms.
+
+| Decode at 256K, median of four workloads (mean of two reps) | temp 0 | temp 0.7 | temp 0.9 | acceptance, temp 0 |
+|---|---:|---:|---:|---:|
+| v2 control `r9-d4-v2` | 39.47 | 38.53 | 35.50 | 61% |
+| **v2.1 `r9-d4-pmin75`** | **39.76** | **37.12** | **40.51** | 75–76% |
+| v2 control `r9-d4-v2b` | 39.87 | 38.68 | 35.55 | 61% |
+| v2 on 2026-11-19 (`r6-262k-d4`, for reference) | 40.65 | 39.29 | 36.19 | 61% |
+
+- On this panel (code, math, prose and JSON, 192 tokens with `ignore_eos`) temp 0 is unchanged: v2.1 sits between its
+  two controls. The panel already accepted 61% of the drafts, so the cutoff has little waste to remove. On the skill's
+  more prose-heavy prompts (37% acceptance) it gave +7%.
+- Above temp 0 each arm samples one fixed text (both reps agree to within 2%), and the draft count changes how the
+  sampler's random stream is used, so the 0.7 (−3.9%) and 0.9 (+14%) cells are one text each, not a speed estimate.
+  The v2 notes above say the same about the depth comparison. The skill's temp 0.7 result, pooled over 9 runs with a
+  different text each time, is +6.8%.
+- `r9-final-pmin75` against `r7-final-cram0`: prefill 744 / 764 / 706 tok/s at 2K / 8K / 32K (v2: 749 / 765 / 706),
+  load 24 s, back to a conversation without the prompt cache 20.8 s (20.7), the 60K needle found at 711 tok/s fill
+  (711), all four smokes passed, no swap growth. Panel decode at temp 0.9: 38.78 tok/s (v2: 36.07), acceptance 77%
+  (51%). Lowest free memory 12.0 GiB (13.1): the box had about 1 GiB less available at the start than on 2026-11-19.

@@ -1,0 +1,164 @@
+{
+  "name": "r9-final-pmin75",
+  "spec": {
+    "ctx": 262144,
+    "depth": 4,
+    "ubatch": 2048,
+    "batch": 4096,
+    "load_mode": "dio",
+    "cache_ram": 0,
+    "env": {
+      "GGML_CUDA_PDL": "1",
+      "GGML_CUDA_GRAPH_OPT": "1",
+      "GGML_CUDA_FA_576_WHOLE_TILES": "1"
+    },
+    "extra": [
+      "--spec-draft-p-min",
+      "0.75"
+    ],
+    "work": [
+      "panel",
+      "prefill",
+      "cache",
+      "swap",
+      "needle60000"
+    ]
+  },
+  "status": "completed",
+  "load_s": 24.057149942964315,
+  "load_disk_read_gib": 85.99954223632812,
+  "smokes": {
+    "text": true,
+    "thinking": true,
+    "vision": true,
+    "tool": true
+  },
+  "panel": {
+    "median_tps": 38.781034980131246,
+    "rows": {
+      "code": {
+        "decode_tps": 37.34210253633035,
+        "draft_n": 182,
+        "accepted": 130,
+        "wall_s": 5.358435827074572
+      },
+      "math": {
+        "decode_tps": 40.21996742393214,
+        "draft_n": 147,
+        "accepted": 132,
+        "wall_s": 4.980784808052704
+      },
+      "prose": {
+        "decode_tps": 33.46404166080462,
+        "draft_n": 182,
+        "accepted": 120,
+        "wall_s": 5.940993296913803
+      },
+      "structured": {
+        "decode_tps": 42.274173467976205,
+        "draft_n": 168,
+        "accepted": 139,
+        "wall_s": 4.759968759026378
+      }
+    },
+    "acceptance": 0.7673048600883653,
+    "tag": "",
+    "temp": 0.9,
+    "n_max": null
+  },
+  "prefill": {
+    "2048": {
+      "prompt_n": 2083,
+      "prompt_ms": 2798.515,
+      "prefill_tps": 744.3233286225017,
+      "client_ttft_s": 2.8059612589422613,
+      "disk_read_gib": 0.28986358642578125,
+      "disk_util": 0.0921917516968821
+    },
+    "2048-warm": {
+      "prompt_n": 2083,
+      "prompt_ms": 2454.286,
+      "prefill_tps": 848.719342407527,
+      "client_ttft_s": 2.463499428005889,
+      "disk_read_gib": 0.000232696533203125,
+      "disk_util": 0.0028521533350228945
+    },
+    "8192": {
+      "prompt_n": 8186,
+      "prompt_ms": 10716.244,
+      "prefill_tps": 763.8870484845249,
+      "client_ttft_s": 10.729627452092245,
+      "disk_read_gib": 0.8305892944335938,
+      "disk_util": 0.07185353375679016
+    },
+    "8192-warm": {
+      "prompt_n": 8186,
+      "prompt_ms": 9746.626,
+      "prefill_tps": 839.8803852738373,
+      "client_ttft_s": 9.76170314999763,
+      "disk_read_gib": 0.0,
+      "disk_util": 0.004822181542617927
+    },
+    "32768": {
+      "prompt_n": 33293,
+      "prompt_ms": 47182.013,
+      "prefill_tps": 705.6290709766877,
+      "client_ttft_s": 47.25818336405791,
+      "disk_read_gib": 2.978992462158203,
+      "disk_util": 0.05716161368528299
+    },
+    "32768-warm": {
+      "prompt_n": 33293,
+      "prompt_ms": 43940.134,
+      "prefill_tps": 757.6899970309604,
+      "client_ttft_s": 44.017993811983615,
+      "disk_read_gib": 0.015224456787109375,
+      "disk_util": 0.007555734809547918
+    }
+  },
+  "cache": {
+    "turn1": {
+      "prompt_n": 16019,
+      "ttft_s": 22.105581594049
+    },
+    "turn2": {
+      "prompt_n": 21,
+      "cache_n": 16082,
+      "ttft_s": 0.2865937980823219
+    }
+  },
+  "swap": {
+    "A1": {
+      "prompt_n": 15935,
+      "cache_n": 0,
+      "ttft_s": 21.85374522698112
+    },
+    "B1": {
+      "prompt_n": 15824,
+      "cache_n": 0,
+      "ttft_s": 21.901857266086154
+    },
+    "A2": {
+      "prompt_n": 16000,
+      "cache_n": 0,
+      "ttft_s": 20.76482100202702
+    },
+    "B2": {
+      "prompt_n": 15889,
+      "cache_n": 0,
+      "ttft_s": 20.663937045959756
+    }
+  },
+  "needle": {
+    "needle60000": {
+      "prompt_n": 60247,
+      "prefill_tps": 711.0297524060497,
+      "client_ttft_s": 84.83495127304923,
+      "passed": true,
+      "answer": "RIVER-4862"
+    }
+  },
+  "min_avail_gib": 11.97296142578125,
+  "peak_swap_growth": 0,
+  "guard": null
+}
