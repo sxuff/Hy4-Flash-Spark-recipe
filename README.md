@@ -7,7 +7,7 @@ stays on the SSD and is read on demand; everything else (~87 GiB) is GPU-residen
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/result-card-dark.svg">
-  <img alt="Hy4 Flash on one DGX Spark, recipe v2: decode 40.6 tok/s at temp 0; prefill 765 tok/s at 8K (+10% vs v1); model load 23 s (was 321 s); 256K context, retrieval passed at 200K; returning to a conversation 0.5 s (was 21 s)." src="assets/result-card-light.svg">
+  <img alt="Hy4 Flash on one DGX Spark, recipe v2.1: decode 39.8 / 37.1 / 40.5 tok/s at temp 0 / 0.7 / 0.9 against 39.7 / 38.6 / 35.5 for v2 the same day; prefill 764 tok/s at 8K (+10% vs v1); model load 24 s (was 321 s); 256K context, retrieval passed at 200K; returning to a conversation 0.5 s (was 21 s)." src="assets/result-card-light.svg">
 </picture>
 
 | | v1 recipe | **v2 recipe (this repo)** |
@@ -26,11 +26,19 @@ configuration tried, and the prefill profile: [`TESTING-AND-RESULTS.md`](TESTING
 Raw receipts: [`results/`](results/).
 
 **v2.1 (2026-11-24): `serve.py` now stops MTP drafting below 75% draft confidence (`--spec-draft-p-min 0.75`).**
-On the [inference-optimisation skill](https://github.com/sybil-solutions/inference-optimisation-skill)'s
-benchmark that is **+7.0% decode at temperature 0 and +6.8% at 0.7** (time-weighted over six prompts; every v2.1 run
-beat every v2 control), with prefill, load time and memory unchanged and retrieval passed at 69K, 131K and 245K tokens.
-The table and card above are still the v2 measurements from `bench/tune.py`; they have not been re-measured with the
-cutoff. `python3 serve.py --p-min 0` serves v2 exactly. [Receipts and every run](results/skill-hillclimb-20261124/README.md)
+The gain depends on how predictable the text is:
+
+| Decode, v2 → v2.1, same day | temp 0 | temp 0.7 | temp 0.9 |
+|---|---|---|---|
+| [inference-optimisation skill](https://github.com/sybil-solutions/inference-optimisation-skill) benchmark: six mixed prompts, time-weighted, 3–8 runs per arm | 32.3 → 34.6 tok/s (**+7.0%**) | 31.8 → 34.0 (**+6.8%**) | — |
+| `bench/tune.py` panel: code, math, prose, JSON, median of four, v2 on both sides | 39.7 → 39.8 (+0.2%) | 38.6 → 37.1 (−3.9%) | 35.5 → 40.5 (+14%) |
+
+On the skill's prompts every v2.1 run beat every v2 control. On the recipe's own panel, which already accepted 61% of
+the drafts, temp 0 is unchanged. Above temp 0 that panel samples one fixed text per arm, and the draft count changes
+how the sampler's random stream is used, so its 0.7 and 0.9 cells move in both directions. Prefill, load time,
+memory, the prompt cache and the smokes are unchanged. Retrieval passed at 60K, 69K, 131K and 245K tokens. The card
+above shows v2.1; the table is the v2 measurement from 2026-11-19 (the same v2 settings decode at 39.7 tok/s at temp 0 on
+this box on 2026-11-24). `python3 serve.py --p-min 0` serves v2 exactly. [Receipts and every run](results/skill-hillclimb-20261124/README.md)
 
 ## Quick start
 
@@ -63,7 +71,7 @@ so follow-up turns reuse the cached prompt.
 | Agent or chat use with several interleaved conversations | `--cache-ram 4096` (recommended) |
 | Largest memory margin for other apps | `--ctx 65536` (≈21 GiB stays free) |
 | A filesystem without O_DIRECT | `--load-mode mmap` (same results, ~5 min load instead of ~23 s) |
-| The v2 drafting (every round drafts all `--depth` tokens) | `--p-min 0`; 0.5 measured +5–6% and 0.9 no gain against v2 |
+| The v2 drafting (every round drafts all `--depth` tokens) | `--p-min 0` (on the skill's benchmark, 0.5 measured +5–6% and 0.9 no gain against v2) |
 
 Do not raise `--cache-ram` to 8192 at 256K context: a full cache plus a long prompt can push free
 memory under 6 GiB. MTP depth can only be set at launch (per-request speculative parameters are

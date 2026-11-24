@@ -1,22 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 668" width="1200" height="668" font-family="system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" role="img" aria-labelledby="t d">
-<title id="t">Hy4 Flash on one DGX Spark: recipe v2 results</title>
-<desc id="d">Decode 40.6 tok/s at temp 0. Prefill at 8K 765 tok/s vs 694 in v1. Model load 23 s vs 321 s. Retrieval passed at 200K tokens. Returning to a conversation 0.5 s vs 21 s.</desc>
+<title id="t">Hy4 Flash on one DGX Spark: recipe v2.1 results</title>
+<desc id="d">Decode 39.8 tok/s at temp 0, 37.1 at 0.7 and 40.5 at 0.9, against 39.7, 38.6 and 35.5 for v2 the same day. Prefill at 8K 764 tok/s vs 694 in v1. Model load 24 s vs 321 s. Retrieval passed at 200K tokens. Returning to a conversation 0.5 s vs 21 s.</desc>
 <rect x="0.5" y="0.5" width="1199" height="667" rx="20" fill="#1a1a19" stroke="rgba(255,255,255,0.10)"/>
 <text x="48.0" y="78.0" font-size="34" font-weight="650" fill="#f0efec" text-anchor="start" >Hy4 Flash on one DGX Spark</text>
 <text x="48.0" y="110.0" font-size="16.5" font-weight="400" fill="#c3c2b7" text-anchor="start" >AngelSlim SPARK-4Bit-Fast GGUF · llama.cpp + Spark patch · GB10, 128 GB unified memory</text>
-<text x="1152.0" y="78.0" font-size="15" font-weight="600" fill="#c3c2b7" text-anchor="end" >recipe v2</text>
-<text x="1152.0" y="104.0" font-size="14" font-weight="400" fill="#898781" text-anchor="end" >single stream · measured 2026-11-19</text>
+<text x="1152.0" y="78.0" font-size="15" font-weight="600" fill="#c3c2b7" text-anchor="end" >recipe v2.1</text>
+<text x="1152.0" y="104.0" font-size="14" font-weight="400" fill="#898781" text-anchor="end" >single stream · measured 2026-11-24</text>
 <rect x="48" y="144" width="330" height="134" rx="12" fill="#212120" stroke="rgba(255,255,255,0.10)"/>
 <text x="68.0" y="176.0" font-size="15" font-weight="400" fill="#c3c2b7" text-anchor="start" >Decode, temp 0</text>
-<text x="68" y="236" fill="#f0efec" font-weight="650"><tspan font-size="60">40.6</tspan><tspan font-size="22" dx="8" fill="#c3c2b7" font-weight="500">tok/s</tspan></text>
-<text x="68.0" y="264.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="start" >39.3 at temp 0.7 · MTP depth 4 · 256K context</text>
+<text x="68" y="236" fill="#f0efec" font-weight="650"><tspan font-size="60">39.8</tspan><tspan font-size="22" dx="8" fill="#c3c2b7" font-weight="500">tok/s</tspan></text>
+<text x="68.0" y="264.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="start" >37.1 at temp 0.7 · MTP depth 4, cutoff 0.75</text>
 <rect x="394.0" y="144" width="179.0" height="134" rx="12" fill="#212120" stroke="rgba(255,255,255,0.10)"/>
 <text x="412.0" y="176.0" font-size="15" font-weight="400" fill="#c3c2b7" text-anchor="start" >Prefill, 8K prompt</text>
-<text x="412.0" y="224" fill="#f0efec" font-weight="600"><tspan font-size="34">765</tspan><tspan font-size="17" dx="5" fill="#c3c2b7" font-weight="500">tok/s</tspan></text>
+<text x="412.0" y="224" fill="#f0efec" font-weight="600"><tspan font-size="34">764</tspan><tspan font-size="17" dx="5" fill="#c3c2b7" font-weight="500">tok/s</tspan></text>
 <text x="412.0" y="256.0" font-size="14" font-weight="500" fill="#0ca30c" text-anchor="start" >▲ 10% vs v1</text>
 <rect x="587.0" y="144" width="179.0" height="134" rx="12" fill="#212120" stroke="rgba(255,255,255,0.10)"/>
 <text x="605.0" y="176.0" font-size="15" font-weight="400" fill="#c3c2b7" text-anchor="start" >Model load</text>
-<text x="605.0" y="224" fill="#f0efec" font-weight="600"><tspan font-size="34">23</tspan><tspan font-size="17" dx="5" fill="#c3c2b7" font-weight="500">s</tspan></text>
+<text x="605.0" y="224" fill="#f0efec" font-weight="600"><tspan font-size="34">24</tspan><tspan font-size="17" dx="5" fill="#c3c2b7" font-weight="500">s</tspan></text>
 <text x="605.0" y="256.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="start" >was 321 s</text>
 <rect x="780.0" y="144" width="179.0" height="134" rx="12" fill="#212120" stroke="rgba(255,255,255,0.10)"/>
 <text x="798.0" y="176.0" font-size="15" font-weight="400" fill="#c3c2b7" text-anchor="start" >Context</text>
@@ -30,7 +30,7 @@
 <rect x="48" y="346" width="12" height="12" rx="3" fill="#1c5cab"/>
 <text x="66.0" y="357.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="start" >v1 recipe</text>
 <rect x="146.39999999999998" y="346" width="12" height="12" rx="3" fill="#5598e7"/>
-<text x="164.4" y="357.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="start" >v2 recipe</text>
+<text x="164.4" y="357.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="start" >v2.1 recipe</text>
 <line x1="88" x2="572.0" y1="562.0" y2="562.0" stroke="#383835" stroke-width="1"/>
 <text x="80.0" y="566.0" font-size="12.5" font-weight="400" fill="#898781" text-anchor="end" font-variant-numeric="tabular-nums">0</text>
 <line x1="88" x2="572.0" y1="505.3" y2="505.3" stroke="#2c2c2a" stroke-width="1"/>
@@ -40,14 +40,14 @@
 <line x1="88" x2="572.0" y1="392.0" y2="392.0" stroke="#2c2c2a" stroke-width="1"/>
 <text x="80.0" y="396.0" font-size="12.5" font-weight="400" fill="#898781" text-anchor="end" font-variant-numeric="tabular-nums">900</text>
 <path d="M127.7,562.0 V440.6 Q127.7,436.6 131.7,436.6 H163.7 Q167.7,436.6 167.7,440.6 V562.0 Z" fill="#1c5cab"/>
-<path d="M169.7,562.0 V424.5 Q169.7,420.5 173.7,420.5 H205.7 Q209.7,420.5 209.7,424.5 V562.0 Z" fill="#5598e7"/>
+<path d="M169.7,562.0 V425.4 Q169.7,421.4 173.7,421.4 H205.7 Q209.7,421.4 209.7,425.4 V562.0 Z" fill="#5598e7"/>
 <text x="147.7" y="429.6" font-size="13.5" font-weight="400" fill="#c3c2b7" text-anchor="middle" >664</text>
-<text x="189.7" y="413.5" font-size="13.5" font-weight="600" fill="#f0efec" text-anchor="middle" >749</text>
+<text x="189.7" y="414.4" font-size="13.5" font-weight="600" fill="#f0efec" text-anchor="middle" >744</text>
 <text x="168.7" y="583.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="middle" >2K</text>
 <path d="M289.0,562.0 V434.9 Q289.0,430.9 293.0,430.9 H325.0 Q329.0,430.9 329.0,434.9 V562.0 Z" fill="#1c5cab"/>
-<path d="M331.0,562.0 V421.4 Q331.0,417.4 335.0,417.4 H367.0 Q371.0,417.4 371.0,421.4 V562.0 Z" fill="#5598e7"/>
+<path d="M331.0,562.0 V421.7 Q331.0,417.7 335.0,417.7 H367.0 Q371.0,417.7 371.0,421.7 V562.0 Z" fill="#5598e7"/>
 <text x="309.0" y="423.9" font-size="13.5" font-weight="400" fill="#c3c2b7" text-anchor="middle" >694</text>
-<text x="351.0" y="410.4" font-size="13.5" font-weight="600" fill="#f0efec" text-anchor="middle" >765</text>
+<text x="351.0" y="410.7" font-size="13.5" font-weight="600" fill="#f0efec" text-anchor="middle" >764</text>
 <text x="330.0" y="583.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="middle" >8K</text>
 <path d="M450.3,562.0 V445.5 Q450.3,441.5 454.3,441.5 H486.3 Q490.3,441.5 490.3,445.5 V562.0 Z" fill="#1c5cab"/>
 <path d="M492.3,562.0 V432.7 Q492.3,428.7 496.3,428.7 H528.3 Q532.3,428.7 532.3,432.7 V562.0 Z" fill="#5598e7"/>
@@ -56,9 +56,9 @@
 <text x="491.3" y="583.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="middle" >32K</text>
 <text x="628.0" y="330" font-size="18" font-weight="600" fill="#f0efec">Decode at 256K context<tspan dx="8" font-size="14.5" font-weight="400" fill="#898781">tok/s</tspan></text>
 <rect x="628.0" y="346" width="12" height="12" rx="3" fill="#1c5cab"/>
-<text x="646.0" y="357.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="start" >MTP depth 2 (v1)</text>
-<rect x="779.6" y="346" width="12" height="12" rx="3" fill="#5598e7"/>
-<text x="797.6" y="357.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="start" >MTP depth 4 (v2)</text>
+<text x="646.0" y="357.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="start" >v2, same day</text>
+<rect x="749.2" y="346" width="12" height="12" rx="3" fill="#5598e7"/>
+<text x="767.2" y="357.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="start" >v2.1: draft cutoff 0.75</text>
 <line x1="668.0" x2="1152.0" y1="562.0" y2="562.0" stroke="#383835" stroke-width="1"/>
 <text x="660.0" y="566.0" font-size="12.5" font-weight="400" fill="#898781" text-anchor="end" font-variant-numeric="tabular-nums">0</text>
 <line x1="668.0" x2="1152.0" y1="505.3" y2="505.3" stroke="#2c2c2a" stroke-width="1"/>
@@ -67,21 +67,21 @@
 <text x="660.0" y="452.7" font-size="12.5" font-weight="400" fill="#898781" text-anchor="end" font-variant-numeric="tabular-nums">30</text>
 <line x1="668.0" x2="1152.0" y1="392.0" y2="392.0" stroke="#2c2c2a" stroke-width="1"/>
 <text x="660.0" y="396.0" font-size="12.5" font-weight="400" fill="#898781" text-anchor="end" font-variant-numeric="tabular-nums">45</text>
-<path d="M707.7,562.0 V420.6 Q707.7,416.6 711.7,416.6 H743.7 Q747.7,416.6 747.7,420.6 V562.0 Z" fill="#1c5cab"/>
-<path d="M749.7,562.0 V412.4 Q749.7,408.4 753.7,408.4 H785.7 Q789.7,408.4 789.7,412.4 V562.0 Z" fill="#5598e7"/>
-<text x="727.7" y="409.6" font-size="13.5" font-weight="400" fill="#c3c2b7" text-anchor="middle" >38.5</text>
-<text x="769.7" y="401.4" font-size="13.5" font-weight="600" fill="#f0efec" text-anchor="middle" >40.6</text>
+<path d="M707.7,562.0 V416.1 Q707.7,412.1 711.7,412.1 H743.7 Q747.7,412.1 747.7,416.1 V562.0 Z" fill="#1c5cab"/>
+<path d="M749.7,562.0 V415.8 Q749.7,411.8 753.7,411.8 H785.7 Q789.7,411.8 789.7,415.8 V562.0 Z" fill="#5598e7"/>
+<text x="727.7" y="405.1" font-size="13.5" font-weight="400" fill="#c3c2b7" text-anchor="middle" >39.7</text>
+<text x="769.7" y="404.8" font-size="13.5" font-weight="600" fill="#f0efec" text-anchor="middle" >39.8</text>
 <text x="748.7" y="583.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="middle" >temp 0</text>
-<path d="M869.0,562.0 V434.8 Q869.0,430.8 873.0,430.8 H905.0 Q909.0,430.8 909.0,434.8 V562.0 Z" fill="#1c5cab"/>
-<path d="M911.0,562.0 V417.6 Q911.0,413.6 915.0,413.6 H947.0 Q951.0,413.6 951.0,417.6 V562.0 Z" fill="#5598e7"/>
-<text x="889.0" y="423.8" font-size="13.5" font-weight="400" fill="#c3c2b7" text-anchor="middle" >34.7</text>
-<text x="931.0" y="406.6" font-size="13.5" font-weight="600" fill="#f0efec" text-anchor="middle" >39.3</text>
+<path d="M869.0,562.0 V420.2 Q869.0,416.2 873.0,416.2 H905.0 Q909.0,416.2 909.0,420.2 V562.0 Z" fill="#1c5cab"/>
+<path d="M911.0,562.0 V425.8 Q911.0,421.8 915.0,421.8 H947.0 Q951.0,421.8 951.0,425.8 V562.0 Z" fill="#5598e7"/>
+<text x="889.0" y="409.2" font-size="13.5" font-weight="400" fill="#c3c2b7" text-anchor="middle" >38.6</text>
+<text x="931.0" y="414.8" font-size="13.5" font-weight="600" fill="#f0efec" text-anchor="middle" >37.1</text>
 <text x="910.0" y="583.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="middle" >temp 0.7</text>
-<path d="M1030.3,562.0 V432.0 Q1030.3,428.0 1034.3,428.0 H1066.3 Q1070.3,428.0 1070.3,432.0 V562.0 Z" fill="#1c5cab"/>
-<path d="M1072.3,562.0 V429.3 Q1072.3,425.3 1076.3,425.3 H1108.3 Q1112.3,425.3 1112.3,429.3 V562.0 Z" fill="#5598e7"/>
-<text x="1050.3" y="421.0" font-size="13.5" font-weight="400" fill="#c3c2b7" text-anchor="middle" >35.5</text>
-<text x="1092.3" y="418.3" font-size="13.5" font-weight="600" fill="#f0efec" text-anchor="middle" >36.2</text>
+<path d="M1030.3,562.0 V431.8 Q1030.3,427.8 1034.3,427.8 H1066.3 Q1070.3,427.8 1070.3,431.8 V562.0 Z" fill="#1c5cab"/>
+<path d="M1072.3,562.0 V413.0 Q1072.3,409.0 1076.3,409.0 H1108.3 Q1112.3,409.0 1112.3,413.0 V562.0 Z" fill="#5598e7"/>
+<text x="1050.3" y="420.8" font-size="13.5" font-weight="400" fill="#c3c2b7" text-anchor="middle" >35.5</text>
+<text x="1092.3" y="402.0" font-size="13.5" font-weight="600" fill="#f0efec" text-anchor="middle" >40.5</text>
 <text x="1071.3" y="583.0" font-size="14" font-weight="400" fill="#c3c2b7" text-anchor="middle" >temp 0.9</text>
 <line x1="48" x2="1152" y1="612" y2="612" stroke="#2c2c2a"/>
-<text x="48.0" y="642.0" font-size="14" font-weight="400" fill="#898781" text-anchor="start" >Non-repetitive prompts, cache off for prefill · lowest free memory 9.7 GiB (8 cached conversations + 120K prompt), no swap growth · receipts in results/</text>
+<text x="48.0" y="642.0" font-size="14" font-weight="400" fill="#898781" text-anchor="start" >Decode: v2 controls on both sides of v2.1 · lowest free memory 9.7 GiB (8 cached conversations + 120K prompt), no swap growth · receipts in results/</text>
 </svg>

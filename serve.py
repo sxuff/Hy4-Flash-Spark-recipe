@@ -21,8 +21,9 @@ def materialize(ctx,depth,ubatch,vision,port,override=None,load_mode='dio',cache
         '--spec-type','draft-mtp' if depth else 'none','--metrics','--jinja']
   if depth: args+=['--spec-draft-n-max',str(depth)]
   # v2.1: stop drafting once the MTP head is less than p_min sure of the next token (the build's default is 0.00, so
-  # every round drafted all `depth` tokens). +7% decode at temp 0 and 0.7; drafts only, the target still decides
-  # every token (results/skill-hillclimb-20261124/)
+  # every round drafted all `depth` tokens). +7% decode on mixed prose-heavy prompts at temp 0 and 0.7, unchanged on
+  # bench/tune.py's code/math/JSON panel at temp 0; drafts only, the target still decides every token
+  # (results/skill-hillclimb-20261124/, results/r9-*)
   if depth and p_min: args+=['--spec-draft-p-min',str(p_min)]
   if vision!='off':
    args+=['--mmproj',str(MODEL/'mmproj-Hy4-flash-bf16.gguf')]

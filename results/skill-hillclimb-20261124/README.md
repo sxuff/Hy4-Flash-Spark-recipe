@@ -20,9 +20,14 @@ Time-weighted decode (total tokens / total decode time over the skill's 6-prompt
 | temperature 0.7 | 31.81 tok/s (30.98–32.78) | **33.98 tok/s** (33.51–34.32) | **+6.8%** | 6 controls, 3 candidates, no overlap |
 
 The slowest v2.1 run beats the fastest control at both temperatures. Prefill (~800 tok/s at 3K and 23K), startup
-(23–26 s) and memory are unchanged. These are the skill's panel and harness: they are lower than the 40.6 tok/s on the
-result card, which comes from `bench/tune.py`'s four 192-token workloads, and the two are not comparable. The card and
-the README table have not been re-measured with `bench/tune.py` yet.
+(23–26 s) and memory are unchanged. These are the skill's panel and harness, not comparable with `bench/tune.py`'s
+four 192-token workloads behind the result card.
+
+**On `bench/tune.py`** (arms `results/r9-*`, the same day, v2 on both sides): temp 0 is unchanged (39.67 → 39.76
+tok/s), because that panel's code, math and JSON already accepted 61% of the drafts. Its temp 0.7 (−3.9%) and 0.9
+(+14%) cells each sample one fixed text, so they move both ways. Prefill, load, the prompt cache, the 60K needle and
+the smokes match v2. The gain therefore depends on the text: about +7% on mixed, prose-heavy prompts, none on
+already-predictable ones. [TESTING-AND-RESULTS.md](../../TESTING-AND-RESULTS.md#the-same-change-on-benchtunepy-r9--2026-11-24)
 
 ## Gates
 
